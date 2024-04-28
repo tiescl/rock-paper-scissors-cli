@@ -2,14 +2,12 @@ const { randomUUID, createHmac } = require('crypto');
 const AsciiTable = require('ascii-table');
 const readline = require('readline-sync');
 
-
 class Game {
     play() {
         if(this.#isValidInput()) {
             console.log("Please provide an odd number of unique moves (minimum of 3) \nExample: Rock Paper Scissors")
             process.exit(0);
         }
-
         let computerMove = this.getComputerMove();
         let secretKey = new KeyGenerator().generateRandomKey();
         let hmacCalculator = new HmacCalculator();
@@ -89,15 +87,16 @@ class HelpTableGenerator {
     }
 
     generateHelpTable() {
+        const description = 'The victory is defined based on a circular relationship between the moves:\nImagine the moves as Rock (R), Paper (P), and Scissors (S) arranged in a circle:\nR -> P -> S -> R. If you choose R, then P and S that come \x1b[42mafter\x1b[0m it in the circle\nwill defeat it. Conversely, moves that come \x1b[42mbefore\x1b[0m it (S) will lose.\n\x1b[0m'
         const table = new AsciiTable('Your moves - Our rules');
         table.setHeading('v User\\PC >', ...moves);
-      
+
         for (let i = 0; i < moves.length; i++) {
           const row = this.#generateTableRow(i);
           table.addRow(row);
         }
 
-        return table.toString();
+        return description + table.toString();
     }
 
     #generateTableRow(move) {
