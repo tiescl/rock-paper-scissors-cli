@@ -19,8 +19,6 @@ class Game {
     );
     this.displayMenu();
     let userMove = this.handleUserInput() - 1;
-    console.log('user ' + userMove);
-    console.log('comp ' + computerMove);
     let result = this.determineOutcome(computerMove, userMove);
     this.diplayFinalResults(computerMove, userMove, result);
     this.displayKey(secretKey);
@@ -63,7 +61,6 @@ class Game {
 
   determineOutcome(computerMove, userMove) {
     let result = Math.sign(((computerMove - userMove + P + N) % N) - P);
-    console.log('res ' + result);
     return result > 0 ? 'Lose' : result == 0 ? 'Draw' : 'Win';
   }
 
